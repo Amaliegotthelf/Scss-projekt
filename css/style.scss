@@ -259,6 +259,32 @@ main {
 input[type=text], input[type=email], input[type=tel], select, textarea{
     width: 100%;
     font-size: 15px;
+     padding: 1em;
+    border: 2px solid partial.$secondary-color;
+    border-radius: 4px;
+    margin: 0.5em 1em 1em 1em;
+    box-sizing: border-box; /*hjælper med at stille kasserne*/
+    font-family: partial.$font;
+
+    &::placeholder{
+        color: partial.$text-color;
+    }
+
+input[type=submit]{ /*Dette er en mixin man kalder på*/
+    @include partial.btn;
+    font-size: 15px;
+    border: none;
+    width: 100%;
+    margin: 0 1em;
+    cursor: pointer; /*lille tilgængeligheds detalje*/
+
+        &:hover{
+        background-color: partial.$secondary-color;
+        transition: 0.3s ease-in-out;
+         } /*hover bør tilføjes til en mixin
+        background-color skal dog gøres til en variabel */
+}
+
 }
 
 .visually-hidden{ /*a11y-collective class som fjerner element fra skærm, men som stadig kan læses af skærmlæseren*/
@@ -271,3 +297,112 @@ input[type=text], input[type=email], input[type=tel], select, textarea{
     white-space: nowrap;
     width: 1px;
 }
+
+/*FOOTER*/
+
+/*primære footer*/
+footer:nth-of-type(1){
+    grid-column: 1/6;
+    background-color: partial.$footer-color;
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1em 4em;
+
+    p, h4{
+        color: partial.$nav-color;
+        line-height: 0,5;
+        font-style: normal; /*Adress tilføjer kursiv*/
+    }
+
+    h4{
+        font-size: 18px;
+    }
+
+    a{
+        color: partial.$nav-color;
+        text-decoration: underline; /*tilgængelighed - indikerer at det er et link*/
+
+            &:hover{
+                color: partial.$primary-color;
+            }
+    }
+
+
+    /*Sekundære footer*/
+    .logo-footer{
+        width: 100px;
+        height: auto;
+
+    }
+
+}
+
+.footer-left{
+    grid-column: 1/2;
+}
+
+.footer-right{
+    grid-column: 2/3; 
+    text-align: right;
+    margin: auto 0; /*centrerer mellem top og bund*/
+}
+
+footer:nth-of-type(2){
+    grid-column: 1/6;
+    background-color: partial.$secondary-color;
+    text-align: center;
+
+        p{
+            color: partial.$bg-color;
+        }
+}
+
+
+/*Tablet og mobil version*/
+
+@media screen and (max-width: 900px){
+    header{
+        display: inline; /*hjælper med at elementer bliver ved siden af hinanden*/
+    }
+
+    nav{
+        #bars{
+            display: flex;
+            border:none; 
+            background-color: transparent;
+            font-size: 2.3em;
+            color: partial.$primary-color;
+            cursor: pointer; /*man skal unstyle button*/
+        }
+
+        ul{ /*forsvinde links*/
+            display: none;
+            height: auto;
+            border-top: 4px solid partial.$primary-color;
+            flex-direction: column; /*ændre retning*/
+
+                li{
+                    display: flex;
+                }
+        }
+
+        .show{ /*Når den registrerer klik vil den tilføje klassen i html og så vil styling blive aktiveret*/
+            display: flex;
+            position: absolute;
+            top: 80px; /*skal muligvis tilpasses til mig*/
+            left: 0;
+            padding: 0;
+            background-color: partial.$nav-color;
+            width: 100%;
+            /*vi vil sikre at nav er oven på banner derfor fordel med z-index*/
+            z-index: 1;
+
+
+
+        }
+        
+
+    }
+
+}
+
